@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 
 public class Generator {
 
-	private static final String path = "/home/mirco/Desktop/";
+	private static final String path = "/your/full/path/";
 
 	public static void main(String[] args) throws FileNotFoundException {
 		Xor xor = new Xor("TestXor");
