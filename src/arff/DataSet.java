@@ -72,6 +72,46 @@ public abstract class DataSet {
 		arff.close();
 	}
 
+	public String printToString() {
+		StringBuilder arff = new StringBuilder();
+
+		arff.append("@RELATION ").append(name).append("\n\n");
+
+		//Definition Section
+		for(Attribute attribute : model) {
+			arff.append("@ATTRIBUTE ").append(attribute.getName()).append(" ");
+			if(attribute.getValues().isEmpty())
+				arff.append("\n");
+			else if(attribute.getValues().size()==1)
+				arff.append(attribute.getValues().get(0)).append("\n");
+			else {
+				StringBuilder values = new StringBuilder("{");
+				for(Object obj : attribute.getValues())
+					values.append(obj).append(",");
+				values.deleteCharAt(values.length()-1).append("}");
+				arff.append(values.toString()).append("\n");
+			}
+		}
+		arff.append("\n");
+
+		//Data Section
+		if(!data.isEmpty()) {
+			arff.append("@DATA"+"\n");
+
+			for(ArrayList<Object> record : data) {
+				StringBuilder values = new StringBuilder();
+				for(Object obj : record)
+					values.append(obj).append(",");
+				values.deleteCharAt(values.length()-1);
+				arff.append(values.toString()).append("\n");
+			}
+		}
+		else
+			arff.append("% No data available\n");
+
+		return arff.toString();
+	}
+
 	private class Attribute {
 		private String name;
 		private ArrayList<Object> values;
